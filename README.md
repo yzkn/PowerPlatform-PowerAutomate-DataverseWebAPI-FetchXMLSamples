@@ -12,7 +12,7 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
 
 ## SELECT TOP 123 * FROM ya_member WHERE ya_column14 > 45 ORDER BY createdon DESC;
 
-件数指定＋列指定＋フィルタリング＋ソート
+件数（行数）指定＋列（属性）指定＋列の別名（エイリアス）＋フィルタリング＋ソート
 
 ```xml
 <fetch top="123">
@@ -47,6 +47,286 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
   </entity>
 </fetch>
 ```
+
+<br><br><br><br>
+
+## 集計
+
+```xml
+<fetch aggregate="true">
+  <entity name="ya_member">
+    <!--
+    <attribute name="ya_column01" alias="FullName" />
+    <attribute name="ya_column14" alias="Rand" />
+    -->
+    <attribute name="ya_column14" alias="Average" aggregate="avg" />
+    <attribute name="ya_column14" alias="Count" aggregate="count" />
+    <attribute name="ya_column14" alias="ColumnCount" aggregate="countcolumn" />
+    <attribute name="ya_column14" alias="Maximum" aggregate="max" />
+    <attribute name="ya_column14" alias="Minimum" aggregate="min" />
+    <attribute name="ya_column14" alias="Sum" aggregate="sum" />
+    <filter type="and">
+      <condition attribute="ya_column14" operator="not-null" />
+      <condition attribute="ya_column14" operator="lt" value="10" />
+    </filter>
+  </entity>
+</fetch>
+```
+
+<br><br><br><br>
+
+## 結合
+
+<br><br><br>
+
+### 一対多
+
+```xml
+<fetch>
+  <entity name="ya_member">
+    <attribute name="ya_column01" />
+    <attribute name="ya_e" />
+    <link-entity name="ya_member" from="ya_parent" to="ya_memberid" link-type="inner" alias="UserName">
+      <attribute name="ya_column01" />
+    </link-entity>
+  </entity>
+</fetch>
+```
+
+```sql
+-- https://orgfa5b0cd9.api.crm7.dynamics.com/api/data/v9.2/FetchXMLToSQL(FetchXml=@p1)?@p1='<fetch>FetchXML</fetch>'
+select
+"ya_member0".ya_column01 as "ya_column01"
+, "ya_member0".ya_e as "ya_e"
+, "UserName".ya_column01 as "UserName.ya_column01"
+from
+ ya_Member as "ya_member0"
+	 join ya_Member as "UserName" on ("ya_member0".ya_memberid  =  "UserName".ya_parent)
+```
+
+<br><br><br>
+
+### 多対一
+
+```xml
+<fetch>
+  <entity name="ya_member">
+    <attribute name="ya_column01" />
+    <link-entity name="systemuser" from="systemuserid" to="createdby" link-type="inner" alias="Creator">
+      <attribute name='fullname' />
+    </link-entity>
+  </entity>
+</fetch>
+```
+
+<br><br><br><br><br>
+
+# ページングCookieを利用して大量データを読み込む
+
+- トリガー
+  - 手動でフローをトリガーします
+  - パラメーター
+    - スキーマ名 : スキーマ名を指定してください（例：ya_Member）
+
+- アクション
+  - 変数を初期化する
+    - アイテム数 : 整数 : 0
+    - MoreRecords : ブール値 : false
+    - ページングCookie : 文字列 : （空文字列）
+    - ページ番号 : 整数 : 1
+  - スコープ : 以下をコピペ（クラシックデザイナー）
+
+<details>
+  <summary>スコープ</summary>
+
+```json
+{
+    "id": "793c6d53-0597-4f42-8184-e601f264fb7c",
+    "brandColor": "#8C3900",
+    "connectionReferences": {
+        "shared_webcontentsv2": {
+            "connection": {
+                "id": "/providers/Microsoft.PowerApps/apis/shared_webcontentsv2/connections/shared-webcontentsv2-c528766f-fdd7-43a2-9443-9579f114a78a"
+            }
+        }
+    },
+    "connectorDisplayName": "制御",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KIDxwYXRoIGQ9Im0wIDBoMzJ2MzJoLTMyeiIgZmlsbD0iIzhDMzkwMCIvPg0KIDxwYXRoIGQ9Im04IDEwaDE2djEyaC0xNnptMTUgMTF2LTEwaC0xNHYxMHptLTItOHY2aC0xMHYtNnptLTEgNXYtNGgtOHY0eiIgZmlsbD0iI2ZmZiIvPg0KPC9zdmc+DQo=",
+    "isTrigger": false,
+    "operationName": "Dataverseコネクタ／100k件超",
+    "operationDefinition": {
+        "type": "Scope",
+        "actions": {
+            "Do_until": {
+                "type": "Until",
+                "expression": "@equals(variables('MoreRecords'),false)",
+                "limit": {
+                    "count": 2000,
+                    "timeout": "PT1H"
+                },
+                "actions": {
+                    "MoreRecordsの設定": {
+                        "type": "SetVariable",
+                        "inputs": {
+                            "name": "MoreRecords",
+                            "value": "@if(empty(string(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])), false, outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])"
+                        },
+                        "runAfter": {
+                            "行を一覧にする": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "if(empty(string(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])), false, outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])",
+                        "metadata": {
+                            "operationMetadataId": "f8a9ad25-1bbb-428c-8e4d-cac836941b21"
+                        }
+                    },
+                    "ページングCookieの設定": {
+                        "type": "SetVariable",
+                        "inputs": {
+                            "name": "ページングCookie",
+                            "value": "paging-cookie=\"@{if(\r\n  empty(\r\n    outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetchxmlpagingcookie']\r\n  ),\r\n  '',\r\n  replace(\r\n    replace(\r\n      replace(\r\n        decodeUriComponent(\r\n          decodeUriComponent(\r\n            first(\r\n              split(\r\n                last(\r\n                  split(\r\n                    outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetchxmlpagingcookie'],\r\n                    'pagingcookie=\"'\r\n                  )\r\n                ),\r\n                '\" '\r\n              )\r\n            )\r\n          )\r\n        ),\r\n        '<',\r\n        '&lt;'\r\n      ),\r\n      '>',\r\n      '&gt;'\r\n    ),\r\n    '\"',\r\n    '&quot;'\r\n  )\r\n)}\""
+                        },
+                        "runAfter": {
+                            "MoreRecordsの設定": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "paging-cookie=\"@{if(empty(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetchxmlpagingcookie']),'',replace(replace(replace(decodeUriComponent(decodeUriComponent(first(split(last(split(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetc",
+                        "metadata": {
+                            "operationMetadataId": "ae3b2f48-6628-4641-b70f-dc73f6b396b4"
+                        }
+                    },
+                    "ページ番号の値を増やす": {
+                        "type": "IncrementVariable",
+                        "inputs": {
+                            "name": "ページ番号",
+                            "value": 1
+                        },
+                        "runAfter": {
+                            "ページングCookieの設定": [
+                                "Succeeded"
+                            ]
+                        },
+                        "metadata": {
+                            "operationMetadataId": "e9bd4ba5-2c3f-4e25-8fa2-dd9e9f2e5aa3"
+                        }
+                    },
+                    "アイテム数の値を増やす": {
+                        "type": "IncrementVariable",
+                        "inputs": {
+                            "name": "アイテム数",
+                            "value": "@length(outputs('行を一覧にする')?['body/value'])"
+                        },
+                        "runAfter": {
+                            "ページ番号の値を増やす": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "length(outputs('行を一覧にする')?['body/value'])",
+                        "metadata": {
+                            "operationMetadataId": "9c5a0df7-05eb-48d1-8205-96cf537f14c9"
+                        }
+                    },
+                    "行を一覧にする": {
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                            "host": {
+                                "connectionName": "shared_webcontentsv2",
+                                "operationId": "InvokeHttp",
+                                "apiId": "/providers/Microsoft.PowerApps/apis/shared_webcontentsv2"
+                            },
+                            "parameters": {
+                                "request/method": "GET",
+                                "request/url": "@{outputs('OrganizationURI')}/api/data/v9.2/@{toLower(triggerBody()?['text'])}s?fetchXml=@{encodeUriComponent(outputs('FetchXML'))}",
+                                "request/headers": {
+                                    "Content-Type": "application/json; charset=utf-8",
+                                    "OData-MaxVersion": "4.0",
+                                    "OData-Version": "4.0",
+                                    "Accept": "application/json",
+                                    "Prefer": "@{outputs('Prefer')}"
+                                }
+                            },
+                            "authentication": {
+                                "type": "Raw",
+                                "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                            }
+                        },
+                        "runAfter": {
+                            "FetchXML": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "@{outputs('OrganizationURI')}/api/data/v9.2/@{toLower(triggerBody()?['text'])}s?fetchXml=@{encodeUriComponent(outputs('FetchXML'))}",
+                        "metadata": {
+                            "operationMetadataId": "e210702e-ba60-44e1-b402-756714573c60"
+                        }
+                    },
+                    "FetchXML": {
+                        "type": "Compose",
+                        "inputs": "<fetch page=\"@{variables('ページ番号')}\" @{variables('ページングCookie')}>\n <entity name='ya_member'>\n  <all-attributes/>\n </entity>\n</fetch>",
+                        "runAfter": {},
+                        "description": "<fetch page=\"@{variables('ページ番号')}\" @{variables('ページングCookie')}>\n <entity name='ya_member'>\n  <all-attributes/>\n </entity>\n</fetch>",
+                        "metadata": {
+                            "operationMetadataId": "8bda05b6-cbfb-4162-a869-831ce6d039fa"
+                        }
+                    }
+                },
+                "runAfter": {
+                    "Prefer": [
+                        "Succeeded"
+                    ]
+                },
+                "metadata": {
+                    "operationMetadataId": "66975f5b-4381-433f-ad1c-0ef8c56d3810"
+                }
+            },
+            "件数": {
+                "type": "Compose",
+                "inputs": "@variables('アイテム数')",
+                "runAfter": {
+                    "Do_until": [
+                        "Succeeded"
+                    ]
+                },
+                "metadata": {
+                    "operationMetadataId": "c013eeb2-4399-40ad-91b6-5875273ac037"
+                }
+            },
+            "Prefer": {
+                "type": "Compose",
+                "inputs": "odata.include-annotations=\"Microsoft.Dynamics.CRM.fetchxmlpagingcookie,Microsoft.Dynamics.CRM.morerecords\"",
+                "runAfter": {
+                    "OrganizationURI": [
+                        "Succeeded"
+                    ]
+                },
+                "metadata": {
+                    "operationMetadataId": "399c8bdb-fd5c-4f13-8e0f-215e41792701"
+                }
+            },
+            "OrganizationURI": {
+                "type": "Compose",
+                "inputs": "https://org*****.crm7.dynamics.com",
+                "runAfter": {},
+                "metadata": {
+                    "operationMetadataId": "e02ef609-935e-4c4c-9b5d-8c47184440c3"
+                }
+            }
+        },
+        "runAfter": {
+            "ページ番号を1で初期化する": [
+                "Succeeded"
+            ]
+        },
+        "metadata": {
+            "operationMetadataId": "2ceb52da-2e29-4f0b-afb6-86b49bee0243"
+        }
+    }
+}
+```
+
+</details>
 
 <br><br><br><br><br>
 
