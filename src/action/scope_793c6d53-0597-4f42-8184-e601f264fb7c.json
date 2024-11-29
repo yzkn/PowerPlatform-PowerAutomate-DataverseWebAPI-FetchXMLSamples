@@ -1,0 +1,184 @@
+{
+    "id": "793c6d53-0597-4f42-8184-e601f264fb7c",
+    "brandColor": "#8C3900",
+    "connectionReferences": {
+        "shared_webcontentsv2": {
+            "connection": {
+                "id": "/providers/Microsoft.PowerApps/apis/shared_webcontentsv2/connections/shared-webcontentsv2-c528766f-fdd7-43a2-9443-9579f114a78a"
+            }
+        }
+    },
+    "connectorDisplayName": "制御",
+    "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KIDxwYXRoIGQ9Im0wIDBoMzJ2MzJoLTMyeiIgZmlsbD0iIzhDMzkwMCIvPg0KIDxwYXRoIGQ9Im04IDEwaDE2djEyaC0xNnptMTUgMTF2LTEwaC0xNHYxMHptLTItOHY2aC0xMHYtNnptLTEgNXYtNGgtOHY0eiIgZmlsbD0iI2ZmZiIvPg0KPC9zdmc+DQo=",
+    "isTrigger": false,
+    "operationName": "Dataverseコネクタ／100k件超",
+    "operationDefinition": {
+        "type": "Scope",
+        "actions": {
+            "Do_until": {
+                "type": "Until",
+                "expression": "@equals(variables('MoreRecords'),false)",
+                "limit": {
+                    "count": 2000,
+                    "timeout": "PT1H"
+                },
+                "actions": {
+                    "MoreRecordsの設定": {
+                        "type": "SetVariable",
+                        "inputs": {
+                            "name": "MoreRecords",
+                            "value": "@if(empty(string(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])), false, outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])"
+                        },
+                        "runAfter": {
+                            "行を一覧にする": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "if(empty(string(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])), false, outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.morerecords'])",
+                        "metadata": {
+                            "operationMetadataId": "f8a9ad25-1bbb-428c-8e4d-cac836941b21"
+                        }
+                    },
+                    "ページングCookieの設定": {
+                        "type": "SetVariable",
+                        "inputs": {
+                            "name": "ページングCookie",
+                            "value": "paging-cookie=\"@{if(\r\n  empty(\r\n    outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetchxmlpagingcookie']\r\n  ),\r\n  '',\r\n  replace(\r\n    replace(\r\n      replace(\r\n        decodeUriComponent(\r\n          decodeUriComponent(\r\n            first(\r\n              split(\r\n                last(\r\n                  split(\r\n                    outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetchxmlpagingcookie'],\r\n                    'pagingcookie=\"'\r\n                  )\r\n                ),\r\n                '\" '\r\n              )\r\n            )\r\n          )\r\n        ),\r\n        '<',\r\n        '&lt;'\r\n      ),\r\n      '>',\r\n      '&gt;'\r\n    ),\r\n    '\"',\r\n    '&quot;'\r\n  )\r\n)}\""
+                        },
+                        "runAfter": {
+                            "MoreRecordsの設定": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "paging-cookie=\"@{if(empty(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetchxmlpagingcookie']),'',replace(replace(replace(decodeUriComponent(decodeUriComponent(first(split(last(split(outputs('行を一覧にする')?['body']?['@Microsoft.Dynamics.CRM.fetc",
+                        "metadata": {
+                            "operationMetadataId": "ae3b2f48-6628-4641-b70f-dc73f6b396b4"
+                        }
+                    },
+                    "ページ番号の値を増やす": {
+                        "type": "IncrementVariable",
+                        "inputs": {
+                            "name": "ページ番号",
+                            "value": 1
+                        },
+                        "runAfter": {
+                            "ページングCookieの設定": [
+                                "Succeeded"
+                            ]
+                        },
+                        "metadata": {
+                            "operationMetadataId": "e9bd4ba5-2c3f-4e25-8fa2-dd9e9f2e5aa3"
+                        }
+                    },
+                    "アイテム数の値を増やす": {
+                        "type": "IncrementVariable",
+                        "inputs": {
+                            "name": "アイテム数",
+                            "value": "@length(outputs('行を一覧にする')?['body/value'])"
+                        },
+                        "runAfter": {
+                            "ページ番号の値を増やす": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "length(outputs('行を一覧にする')?['body/value'])",
+                        "metadata": {
+                            "operationMetadataId": "9c5a0df7-05eb-48d1-8205-96cf537f14c9"
+                        }
+                    },
+                    "行を一覧にする": {
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                            "host": {
+                                "connectionName": "shared_webcontentsv2",
+                                "operationId": "InvokeHttp",
+                                "apiId": "/providers/Microsoft.PowerApps/apis/shared_webcontentsv2"
+                            },
+                            "parameters": {
+                                "request/method": "GET",
+                                "request/url": "@{outputs('OrganizationURI')}/api/data/v9.2/@{toLower(triggerBody()?['text'])}s?fetchXml=@{encodeUriComponent(outputs('FetchXML'))}",
+                                "request/headers": {
+                                    "Content-Type": "application/json; charset=utf-8",
+                                    "OData-MaxVersion": "4.0",
+                                    "OData-Version": "4.0",
+                                    "Accept": "application/json",
+                                    "Prefer": "@{outputs('Prefer')}"
+                                }
+                            },
+                            "authentication": {
+                                "type": "Raw",
+                                "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                            }
+                        },
+                        "runAfter": {
+                            "FetchXML": [
+                                "Succeeded"
+                            ]
+                        },
+                        "description": "@{outputs('OrganizationURI')}/api/data/v9.2/@{toLower(triggerBody()?['text'])}s?fetchXml=@{encodeUriComponent(outputs('FetchXML'))}",
+                        "metadata": {
+                            "operationMetadataId": "e210702e-ba60-44e1-b402-756714573c60"
+                        }
+                    },
+                    "FetchXML": {
+                        "type": "Compose",
+                        "inputs": "<fetch page=\"@{variables('ページ番号')}\" @{variables('ページングCookie')}>\n <entity name='ya_member'>\n  <all-attributes/>\n </entity>\n</fetch>",
+                        "runAfter": {},
+                        "description": "<fetch page=\"@{variables('ページ番号')}\" @{variables('ページングCookie')}>\n <entity name='ya_member'>\n  <all-attributes/>\n </entity>\n</fetch>",
+                        "metadata": {
+                            "operationMetadataId": "8bda05b6-cbfb-4162-a869-831ce6d039fa"
+                        }
+                    }
+                },
+                "runAfter": {
+                    "Prefer": [
+                        "Succeeded"
+                    ]
+                },
+                "metadata": {
+                    "operationMetadataId": "66975f5b-4381-433f-ad1c-0ef8c56d3810"
+                }
+            },
+            "件数": {
+                "type": "Compose",
+                "inputs": "@variables('アイテム数')",
+                "runAfter": {
+                    "Do_until": [
+                        "Succeeded"
+                    ]
+                },
+                "metadata": {
+                    "operationMetadataId": "c013eeb2-4399-40ad-91b6-5875273ac037"
+                }
+            },
+            "Prefer": {
+                "type": "Compose",
+                "inputs": "odata.include-annotations=\"Microsoft.Dynamics.CRM.fetchxmlpagingcookie,Microsoft.Dynamics.CRM.morerecords\"",
+                "runAfter": {
+                    "OrganizationURI": [
+                        "Succeeded"
+                    ]
+                },
+                "metadata": {
+                    "operationMetadataId": "399c8bdb-fd5c-4f13-8e0f-215e41792701"
+                }
+            },
+            "OrganizationURI": {
+                "type": "Compose",
+                "inputs": "https://org*****.crm7.dynamics.com",
+                "runAfter": {},
+                "metadata": {
+                    "operationMetadataId": "e02ef609-935e-4c4c-9b5d-8c47184440c3"
+                }
+            }
+        },
+        "runAfter": {
+            "ページ番号を1で初期化する": [
+                "Succeeded"
+            ]
+        },
+        "metadata": {
+            "operationMetadataId": "2ceb52da-2e29-4f0b-afb6-86b49bee0243"
+        }
+    }
+}

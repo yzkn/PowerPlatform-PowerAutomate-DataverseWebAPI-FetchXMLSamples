@@ -1,0 +1,17 @@
+<fetch top="12">
+    <entity name="ya_member">
+        <all-attributes />
+        <!--
+            <attribute name="ya_column01" alias="FullName" />
+            <attribute name="ya_column02" alias="Surname" />
+            <attribute name="ya_column03" alias="GivenName" />
+            <attribute name="ya_column14" alias="RandomNumber" />
+            <attribute name="ya_e" alias="EmailAddress" />
+        -->
+        <filter>
+            <condition attribute="ya_column14" operator="gt" value="45" />
+            <condition attribute="ya_column02" operator="not-null" />
+        </filter>
+        <order attribute="createdon" descending="true" />
+    </entity>
+</fetch>

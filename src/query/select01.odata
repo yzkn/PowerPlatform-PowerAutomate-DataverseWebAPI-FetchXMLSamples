@@ -1,0 +1,1 @@
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$filter=(ya_column14 gt 45 and ya_column02 ne null)&$orderby=createdon desc&$top=12
