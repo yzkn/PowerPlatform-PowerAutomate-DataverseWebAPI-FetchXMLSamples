@@ -1,0 +1,6 @@
+<fetch distinct="true">
+    <entity name="ya_member">
+        <attribute name="ya_column02" />
+        <order attribute="ya_column02" />
+    </entity>
+</fetch>

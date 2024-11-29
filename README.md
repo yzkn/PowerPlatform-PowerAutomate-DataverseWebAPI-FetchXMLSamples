@@ -13,29 +13,22 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
 ## 件数（行数）指定＋列（属性）指定＋列の別名（エイリアス）＋フィルタリング＋ソート
 
 - [SQL](src/query/select01.sql)
+  - [結果](src/result/select01.sql.json)
 - [FetchXML](src/query/select01.xml)
+  - [結果](src/result/select01.xml.json)
 - [ODataクエリ](src/query/select01.odata)
+  - [結果](src/result/select01.odata.json)
 
 <br><br><br><br>
 
-## SELECT DISTINCT ya_column02 FROM ya_member ORDER BY ya_column02;
+## 重複除外
 
-重複除外
-
-```xml
-<fetch distinct="true">
-  <entity name="ya_member">
-    <attribute name="ya_column02" />
-    <order attribute="ya_column02" />
-  </entity>
-</fetch>
-```
-
-```
-https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$apply=groupby((ya_column02)) // レコード数は5000件まで AggregateQueryRecordLimit exceeded. Cannot perform this operation.
-
-// https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$apply=filter(ya_column02 ne null)/groupby((ya_column02)) // 集計値のソートは非対応
-```
+- [SQL](src/query/distinct01.sql)
+  - [結果](src/result/distinct01.sql.json)
+- [FetchXML](src/query/distinct01.xml)
+  - [結果](src/result/distinct01.xml.json)
+- [ODataクエリ](src/query/distinct01.odata)
+  - [結果](src/result/distinct01.odata.json)
 
 <br><br><br><br>
 

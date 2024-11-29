@@ -1,0 +1,12 @@
+// FetchXML Builderでの自動生成結果（distinct演算子自体はODataクエリにないので消えている）
+
+// https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$select=ya_column02&$orderby=ya_column02 asc
+
+
+
+// ODataクエリは、集計値のソートには対応していない
+
+// レコード数が5000件を超えると AggregateQueryRecordLimit exceeded. Cannot perform this operation.
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$apply=groupby((ya_column02))
+
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$apply=filter(ya_column02 ne null)/groupby((ya_column02))
