@@ -1,0 +1,1 @@
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$apply=filter((ya_column14 ne null and ya_column14 lt 10))/aggregate(ya_column14 with average as Average,$count as Count,ya_column14 with countdistinct as ColumnCount,ya_column14 with countdistinct as CountDistinct,ya_column14 with max as Maximum,ya_column14 with min as Minimum,ya_column14 with sum as Sum)

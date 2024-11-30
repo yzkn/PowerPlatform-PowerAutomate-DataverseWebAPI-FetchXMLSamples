@@ -1,0 +1,14 @@
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#ya_members",
+    "value": [
+        {
+            "Average": 3,
+            "Count": 6,
+            "ColumnCount": 4,
+            "CountDistinct": 4,
+            "Maximum": 6,
+            "Minimum": 1,
+            "Sum": 22
+        }
+    ]
+}

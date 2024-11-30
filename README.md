@@ -34,28 +34,14 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
 
 ## 集計
 
-```xml
-<fetch aggregate="true">
-  <entity name="ya_member">
-    <attribute name="ya_column14" alias="Average" aggregate="avg" />
-    <attribute name="ya_column14" alias="Count" aggregate="count" />
-    <attribute name="ya_column14" alias="ColumnCount" aggregate="countcolumn" />
-    <attribute name="ya_column14" alias="CountDistinct" aggregate="countcolumn" distinct="true" />
-    <attribute name="ya_column14" alias="Maximum" aggregate="max" />
-    <attribute name="ya_column14" alias="Minimum" aggregate="min" />
-    <attribute name="ya_column14" alias="Sum" aggregate="sum" />
-    <filter type="and">
-      <condition attribute="ya_column14" operator="not-null" />
-      <condition attribute="ya_column14" operator="lt" value="10" />
-    </filter>
-  </entity>
-</fetch>
-```
+ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 
-```
-https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$apply=filter((ya_column14%20ne%20null%20and%20ya_column14%20lt%2010))/aggregate(ya_column14%20with%20average%20as%20Average,$count%20as%20Count,ya_column14%20with%20countdistinct%20as%20ColumnCount,ya_column14%20with%20countdistinct%20as%20CountDistinct,ya_column14%20with%20max%20as%20Maximum,ya_column14%20with%20min%20as%20Minimum,ya_column14%20with%20sum%20as%20Sum)
-// ColumnCountは、FetchXMLとODataクエリで挙動が異なる
-```
+- [SQL](src/query/aggregate01.sql)
+  - [結果](src/result/aggregate01.sql.json)
+- [FetchXML](src/query/aggregate01.xml)
+  - [結果](src/result/aggregate01.xml.json)
+- [ODataクエリ](src/query/aggregate01.odata)
+  - [結果](src/result/aggregate01.odata.json)
 
 <br><br><br><br>
 
