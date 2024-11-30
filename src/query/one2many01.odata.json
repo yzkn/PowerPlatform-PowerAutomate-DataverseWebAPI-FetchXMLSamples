@@ -1,0 +1,128 @@
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#ya_members(ya_column01,ya_e,ya_Member_Parent_ya_Member(ya_column01))",
+    "value": [
+        {
+            "@odata.etag": "W/\"3578419\"",
+            "ya_column01": "阿久津 <br>綾奈",
+            "ya_e": "ayana8928@eezgbnxifj.zg",
+            "ya_memberid": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+            "ya_Member_Parent_ya_Member": [
+                {
+                    "@odata.etag": "W/\"3593842\"",
+                    "ya_column01": "阿久津 綾奈0",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "4edd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593841\"",
+                    "ya_column01": "阿久津 綾奈1",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "4fdd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593852\"",
+                    "ya_column01": "阿久津 綾奈2",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "50dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593851\"",
+                    "ya_column01": "阿久津 綾奈3",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "51dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593853\"",
+                    "ya_column01": "阿久津 綾奈4",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "52dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593854\"",
+                    "ya_column01": "阿久津 綾奈5",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "53dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593855\"",
+                    "ya_column01": "阿久津 綾奈6",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "54dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593856\"",
+                    "ya_column01": "阿久津 綾奈7",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "55dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593857\"",
+                    "ya_column01": "阿久津 綾奈8",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "56dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593858\"",
+                    "ya_column01": "阿久津 綾奈9",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "57dd5950-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593839\"",
+                    "ya_column01": "阿久津 綾奈10",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "f0719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593843\"",
+                    "ya_column01": "阿久津 綾奈11",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "f3719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593844\"",
+                    "ya_column01": "阿久津 綾奈12",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "f5719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593845\"",
+                    "ya_column01": "阿久津 綾奈13",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "f7719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593846\"",
+                    "ya_column01": "阿久津 綾奈14",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "fa719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593847\"",
+                    "ya_column01": "阿久津 綾奈15",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "fb719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593848\"",
+                    "ya_column01": "阿久津 綾奈16",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "fc719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593849\"",
+                    "ya_column01": "阿久津 綾奈17",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "fd719e56-63a2-ef11-8a69-000d3acf17ba"
+                },
+                {
+                    "@odata.etag": "W/\"3593850\"",
+                    "ya_column01": "阿久津 綾奈19",
+                    "_ya_parent_value": "905f14ea-9ba1-ef11-8a69-000d3acf17ba",
+                    "ya_memberid": "c5289940-f2a2-ef11-a72c-6045bd54ec6a"
+                }
+            ],
+            "ya_Member_Parent_ya_Member@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members(905f14ea-9ba1-ef11-8a69-000d3acf17ba)/ya_Member_Parent_ya_Member?$select=ya_column01"
+        }
+    ]
+}

@@ -51,38 +51,12 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 
 ### 一対多
 
-```xml
-<fetch>
-  <entity name="ya_member">
-    <attribute name="ya_column01" />
-    <attribute name="ya_e" />
-    <link-entity name="ya_member" from="ya_parent" to="ya_memberid" link-type="inner" alias="UserName">
-      <attribute name="ya_column01" />
-    </link-entity>
-  </entity>
-</fetch>
-```
-
-```
-https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$select=ya_column01,ya_e&$expand=ya_Member_Parent_ya_Member($select=ya_column01)&$filter=(ya_Member_Parent_ya_Member/any(o1:(o1/ya_memberid ne null)))
-```
-
-```sql
-SELECT ya_column01, ya_e, UserName.ya_column01
-FROM ya_member
-JOIN ya_member UserName ON UserName.ya_parent = ya_member.ya_memberid
-```
-
-```sql
--- https://orgfa5b0cd9.api.crm7.dynamics.com/api/data/v9.2/FetchXMLToSQL(FetchXml=@p1)?@p1='<fetch>FetchXML</fetch>' で生成した例
-select
-"ya_member0".ya_column01 as "ya_column01"
-, "ya_member0".ya_e as "ya_e"
-, "UserName".ya_column01 as "UserName.ya_column01"
-from
- ya_Member as "ya_member0"
-	 join ya_Member as "UserName" on ("ya_member0".ya_memberid  =  "UserName".ya_parent)
-```
+- [SQL](src/query/one2many01.sql)
+  - [結果](src/result/one2many01.sql.json)
+- [FetchXML](src/query/one2many01.xml)
+  - [結果](src/result/one2many01.xml.json)
+- [ODataクエリ](src/query/one2many01.odata)
+  - [結果](src/result/one2many01.odata.json)
 
 <br><br><br>
 
