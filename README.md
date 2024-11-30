@@ -271,6 +271,24 @@ https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$f
 
 ### Dataverse クエリ関数
 
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$select=name,numberofemployees&$filter=Microsoft.Dynamics.CRM.Between(PropertyName='numberofemployees',PropertyValues=["5","2000"])
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#accounts(name,numberofemployees)",
+    "value": [
+        {
+            "@odata.etag": "W/\"3608672\"",
+            "name": "コントソ製薬 (サンプル)",
+            "numberofemployees": 1500,
+            "accountid": "38974e2f-fcaa-ef11-b8e8-002248f17214"
+        }
+    ]
+}
+```
+
 | Group      | 関数                             | Description                                                                                                   | Example                                                                                                                                        |
 | ---------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | 日付       | InFiscalPeriod                   | Query function that evaluates whether the value is within the specified fiscal period.                        | ?$filter=Microsoft.Dynamics.CRM.InFiscalPeriod(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                           |
@@ -336,11 +354,11 @@ https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$f
 |            | UnderOrEqual                     | Query function that evaluates whether the entity is under or equal to the referenced entity in the hierarchy. | ?$filter=Microsoft.Dynamics.CRM.UnderOrEqual(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2='value'                                        |
 | 選択肢の列 | ContainValues                    | Query function that evaluates whether the choices column contains the values.                                 | ?$filter=Microsoft.Dynamics.CRM.ContainValues(PropertyName=@p1,PropertyValues=@p2)&@p1='name'&@p2=['value','value']                            |
 |            | DoesNotContainValues             | Query function that evaluates whether the choices column does not contain the values.                         | ?$filter=Microsoft.Dynamics.CRM.DoesNotContainValues(PropertyName=@p1,PropertyValues=@p2)&@p1='name'&@p2=['value','value']                     |
-| 次の範囲内 | Between                          |                                                                                                               |                                                                                                                                                |
-|            | NotBetween                       |                                                                                                               |                                                                                                                                                |
-| 後         | In                               |                                                                                                               |                                                                                                                                                |
-|            | NotIn                            |                                                                                                               |                                                                                                                                                |
-| 言語       | EqualUserLanguage                |                                                                                                               |                                                                                                                                                |
+| 次の範囲内 | Between                          | Query function to evaluate whether the value is between two values.                                           | ?$filter=Microsoft.Dynamics.CRM.Between(PropertyName=@p1,PropertyValues=@p2)&@p1='name'&@p2=['value','value']                                  |
+|            | NotBetween                       | Query function to evaluate whether the value is not between two values.                                       | ?$filter=Microsoft.Dynamics.CRM.NotBetween(PropertyName=@p1,PropertyValues=@p2)&@p1='name'&@p2=['value','value']                               |
+| 後         | In                               | Query function that evaluates whether the value exists in a list of values.                                   | ?$filter=Microsoft.Dynamics.CRM.In(PropertyName=@p1,PropertyValues=@p2)&@p1='name'&@p2=['value','value']                                       |
+|            | NotIn                            | Query function to evaluate whether the value is not matched to a value in a subquery or a list.               | ?$filter=Microsoft.Dynamics.CRM.NotIn(PropertyName=@p1,PropertyValues=@p2)&@p1='name'&@p2=['value','value']                                    |
+| 言語       | EqualUserLanguage                | Query function that evaluates whether the value is equal to the language for the user.                        | ?$filter=Microsoft.Dynamics.CRM.EqualUserLanguage(PropertyName=@p1)&@p1='name'                                                                 |
 
 - [Dataverse クエリ関数](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#dataverse-query-functions)
   - [完全なリスト](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/reference/queryfunctions)
