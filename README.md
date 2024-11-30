@@ -271,76 +271,76 @@ https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$f
 
 ### Dataverse クエリ関数
 
-| Group      | 関数                             | Description |
-| ---------- | -------------------------------- | ----------- |
-| 日付       | InFiscalPeriod                   |             |
-|            | InFiscalPeriodAndYear            |             |
-|            | InFiscalYear                     |             |
-|            | InOrAfterFiscalPeriodAndYear     |             |
-|            | InOrBeforeFiscalPeriodAndYear    |             |
-|            | Last7Days                        |             |
-|            | LastFiscalPeriod                 |             |
-|            | LastFiscalYear                   |             |
-|            | LastMonth                        |             |
-|            | LastWeek                         |             |
-|            | LastXDays                        |             |
-|            | LastXFiscalPeriods               |             |
-|            | LastXFiscalYears                 |             |
-|            | LastXHours                       |             |
-|            | LastXMonths                      |             |
-|            | LastXWeeks                       |             |
-|            | LastXYears                       |             |
-|            | LastYear                         |             |
-|            | Next7Days                        |             |
-|            | NextFiscalPeriod                 |             |
-|            | NextFiscalYear                   |             |
-|            | NextMonth                        |             |
-|            | NextWeek                         |             |
-|            | NextXDays                        |             |
-|            | NextXFiscalPeriods               |             |
-|            | NextXFiscalYears                 |             |
-|            | NextXHours                       |             |
-|            | NextXMonths                      |             |
-|            | NextXWeeks                       |             |
-|            | NextXYears                       |             |
-|            | NextYear                         |             |
-|            | OlderThanXDays                   |             |
-|            | OlderThanXHours                  |             |
-|            | OlderThanXMinutes                |             |
-|            | OlderThanXMonths                 |             |
-|            | OlderThanXWeeks                  |             |
-|            | OlderThanXYears                  |             |
-|            | On                               |             |
-|            | OnOrAfter                        |             |
-|            | OnOrBefore                       |             |
-|            | ThisFiscalPeriod                 |             |
-|            | ThisFiscalYear                   |             |
-|            | ThisMonth                        |             |
-|            | ThisWeek                         |             |
-|            | ThisYear                         |             |
-|            | Today                            |             |
-|            | Tomorrow                         |             |
-|            | Yesterday                        |             |
-| ID 値      | EqualBusinessId                  |             |
-|            | EqualUserId                      |             |
-|            | NotEqualBusinessId               |             |
-|            | NotEqualUserId                   |             |
-| 階層       | Above                            |             |
-|            | AboveOrEqual                     |             |
-|            | EqualUserOrUserHierarchy         |             |
-|            | EqualUserOrUserHierarchyAndTeams |             |
-|            | EqualUserOrUserTeams             |             |
-|            | EqualUserTeams                   |             |
-|            | NotUnder                         |             |
-|            | Under                            |             |
-|            | UnderOrEqual                     |             |
-| 選択肢の列 | ContainValues                    |             |
-|            | DoesNotContainValues             |             |
-| 次の範囲内 | Between                          |             |
-|            | NotBetween                       |             |
-| 後         | In                               |             |
-|            | NotIn                            |             |
-| 言語       | EqualUserLanguage                |             |
+| Group      | 関数                             | Description                                                                                               | Example                                                                                                                                        |
+| ---------- | -------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| 日付       | InFiscalPeriod                   | Query function that evaluates whether the value is within the specified fiscal period.                    | ?$filter=Microsoft.Dynamics.CRM.InFiscalPeriod(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                           |
+|            | InFiscalPeriodAndYear            | Query function that evaluates whether the value is within the specified fiscal period and year.           | ?$filter=Microsoft.Dynamics.CRM.InFiscalPeriodAndYear(PropertyName=@p1,PropertyValue1=@p2,PropertyValue2=@p3)&@p1='name'&@p2=42&@p3=42         |
+|            | InFiscalYear                     | Query function that evaluates whether the value is within the specified fiscal year.                      | ?$filter=Microsoft.Dynamics.CRM.InFiscalYear(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                             |
+|            | InOrAfterFiscalPeriodAndYear     | Query function that evaluates whether the value is within or after the specified fiscal period and year.  | ?$filter=Microsoft.Dynamics.CRM.InOrAfterFiscalPeriodAndYear(PropertyName=@p1,PropertyValue1=@p2,PropertyValue2=@p3)&@p1='name'&@p2=42&@p3=42  |
+|            | InOrBeforeFiscalPeriodAndYear    | Query function that evaluates whether the value is within or before the specified fiscal period and year. | ?$filter=Microsoft.Dynamics.CRM.InOrBeforeFiscalPeriodAndYear(PropertyName=@p1,PropertyValue1=@p2,PropertyValue2=@p3)&@p1='name'&@p2=42&@p3=42 |
+|            | Last7Days                        | Query function to evaluate whether the value is within the last seven days including today.               | ?$filter=Microsoft.Dynamics.CRM.Last7Days(PropertyName=@p1)&@p1='name'                                                                         |
+|            | LastFiscalPeriod                 | Query function to evaluate whether the value is within the last fiscal period.                            | ?$filter=Microsoft.Dynamics.CRM.LastFiscalPeriod(PropertyName=@p1)&@p1='name'                                                                  |
+|            | LastFiscalYear                   | Query function to evaluate whether the value is within the last fiscal year.                              | ?$filter=Microsoft.Dynamics.CRM.LastFiscalYear(PropertyName=@p1)&@p1='name'                                                                    |
+|            | LastMonth                        | Query function to evaluate whether the value is within the last fiscal year.                              | ?$filter=Microsoft.Dynamics.CRM.LastMonth(PropertyName=@p1)&@p1='name'                                                                         |
+|            | LastWeek                         | Query function to evaluate whether the value is within the last week.                                     | ?$filter=Microsoft.Dynamics.CRM.LastWeek(PropertyName=@p1)&@p1='name'                                                                          |
+|            | LastXDays                        | Query function to evaluate whether the value is within the last X days.                                   | ?$filter=Microsoft.Dynamics.CRM.LastXDays(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                                |
+|            | LastXFiscalPeriods               | Query function to evaluate whether the value is within the last X fiscal periods.                         | ?$filter=Microsoft.Dynamics.CRM.LastXFiscalPeriods(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                       |
+|            | LastXFiscalYears                 | Query function to evaluate whether the value is within the last X fiscal years.                           | ?$filter=Microsoft.Dynamics.CRM.LastXFiscalYears(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                         |
+|            | LastXHours                       | Query function to evaluate whether the value is within the last X hours                                   | ?$filter=Microsoft.Dynamics.CRM.LastXHours(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                               |
+|            | LastXMonths                      | Query function to evaluate whether the value is within the last X months.                                 | ?$filter=Microsoft.Dynamics.CRM.LastXMonths(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                              |
+|            | LastXWeeks                       | Query function to evaluate whether the value is within the last X weeks.                                  | ?$filter=Microsoft.Dynamics.CRM.LastXWeeks(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                               |
+|            | LastXYears                       | Query function to evaluate whether the value is within the last X years.                                  | ?$filter=Microsoft.Dynamics.CRM.LastXYears(PropertyName=@p1,PropertyValue=@p2)&@p1='name'&@p2=42                                               |
+|            | LastYear                         | Query function to evaluate whether the value is within the last year.                                     | ?$filter=Microsoft.Dynamics.CRM.LastYear(PropertyName=@p1)&@p1='name'                                                                          |
+|            | Next7Days                        |                                                                                                           |                                                                                                                                                |
+|            | NextFiscalPeriod                 |                                                                                                           |                                                                                                                                                |
+|            | NextFiscalYear                   |                                                                                                           |                                                                                                                                                |
+|            | NextMonth                        |                                                                                                           |                                                                                                                                                |
+|            | NextWeek                         |                                                                                                           |                                                                                                                                                |
+|            | NextXDays                        |                                                                                                           |                                                                                                                                                |
+|            | NextXFiscalPeriods               |                                                                                                           |                                                                                                                                                |
+|            | NextXFiscalYears                 |                                                                                                           |                                                                                                                                                |
+|            | NextXHours                       |                                                                                                           |                                                                                                                                                |
+|            | NextXMonths                      |                                                                                                           |                                                                                                                                                |
+|            | NextXWeeks                       |                                                                                                           |                                                                                                                                                |
+|            | NextXYears                       |                                                                                                           |                                                                                                                                                |
+|            | NextYear                         |                                                                                                           |                                                                                                                                                |
+|            | OlderThanXDays                   |                                                                                                           |                                                                                                                                                |
+|            | OlderThanXHours                  |                                                                                                           |                                                                                                                                                |
+|            | OlderThanXMinutes                |                                                                                                           |                                                                                                                                                |
+|            | OlderThanXMonths                 |                                                                                                           |                                                                                                                                                |
+|            | OlderThanXWeeks                  |                                                                                                           |                                                                                                                                                |
+|            | OlderThanXYears                  |                                                                                                           |                                                                                                                                                |
+|            | On                               |                                                                                                           |                                                                                                                                                |
+|            | OnOrAfter                        |                                                                                                           |                                                                                                                                                |
+|            | OnOrBefore                       |                                                                                                           |                                                                                                                                                |
+|            | ThisFiscalPeriod                 |                                                                                                           |                                                                                                                                                |
+|            | ThisFiscalYear                   |                                                                                                           |                                                                                                                                                |
+|            | ThisMonth                        |                                                                                                           |                                                                                                                                                |
+|            | ThisWeek                         |                                                                                                           |                                                                                                                                                |
+|            | ThisYear                         |                                                                                                           |                                                                                                                                                |
+|            | Today                            |                                                                                                           |                                                                                                                                                |
+|            | Tomorrow                         |                                                                                                           |                                                                                                                                                |
+|            | Yesterday                        |                                                                                                           |                                                                                                                                                |
+| ID 値      | EqualBusinessId                  |                                                                                                           |                                                                                                                                                |
+|            | EqualUserId                      |                                                                                                           |                                                                                                                                                |
+|            | NotEqualBusinessId               |                                                                                                           |                                                                                                                                                |
+|            | NotEqualUserId                   |                                                                                                           |                                                                                                                                                |
+| 階層       | Above                            |                                                                                                           |                                                                                                                                                |
+|            | AboveOrEqual                     |                                                                                                           |                                                                                                                                                |
+|            | EqualUserOrUserHierarchy         |                                                                                                           |                                                                                                                                                |
+|            | EqualUserOrUserHierarchyAndTeams |                                                                                                           |                                                                                                                                                |
+|            | EqualUserOrUserTeams             |                                                                                                           |                                                                                                                                                |
+|            | EqualUserTeams                   |                                                                                                           |                                                                                                                                                |
+|            | NotUnder                         |                                                                                                           |                                                                                                                                                |
+|            | Under                            |                                                                                                           |                                                                                                                                                |
+|            | UnderOrEqual                     |                                                                                                           |                                                                                                                                                |
+| 選択肢の列 | ContainValues                    |                                                                                                           |                                                                                                                                                |
+|            | DoesNotContainValues             |                                                                                                           |                                                                                                                                                |
+| 次の範囲内 | Between                          |                                                                                                           |                                                                                                                                                |
+|            | NotBetween                       |                                                                                                           |                                                                                                                                                |
+| 後         | In                               |                                                                                                           |                                                                                                                                                |
+|            | NotIn                            |                                                                                                           |                                                                                                                                                |
+| 言語       | EqualUserLanguage                |                                                                                                           |                                                                                                                                                |
 
 - [Dataverse クエリ関数](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#dataverse-query-functions)
   - [完全なリスト](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/reference/queryfunctions)
