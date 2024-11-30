@@ -6,6 +6,15 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
 
 <br><br><br><br><br>
 
+# 利用したツール
+
+- XRMToolBox
+  - FetchXML Builder
+  - SQL4CDS
+  - \(SSMS\)
+
+<br><br><br><br><br>
+
 # 基本的なクエリ
 
 <br><br><br><br>
@@ -185,15 +194,55 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 
 ### 比較演算子
 
+列の型が一致する必要がある。
+
+| Operator | Description | 例                        |
+| -------- | ----------- | ------------------------- |
+| eq       | 等しい      | $filter=revenue eq 100000 |
+| ne       | 等しくない  | $filter=revenue ne 100000 |
+| gt       | より大きい  | $filter=revenue gt 100000 |
+| ge       | 以上        | $filter=revenue ge 100000 |
+| lt       | より小さい  | $filter=revenue lt 100000 |
+| le       | 以下        | $filter=revenue le 100000 |
+
 ### 論理演算子
+
+| Operator | Description | 例                                                         |
+| -------- | ----------- | ---------------------------------------------------------- |
+| and      | 論理積      | $filter=revenue lt 100000 and revenue gt 2000              |
+| or       | 論理和      | $filter=contains(name,'(sample)') or contains(name,'test') |
+| not      | 論理否定    | $filter=not contains(name,'sample')                        |
 
 ### グループ化演算子
 
+| Operator | Description | 例                                                                     |
+| -------- | ----------- | ---------------------------------------------------------------------- |
+| ()       | グループ化  | (contains(name,'sample') or contains(name,'test')) and revenue gt 5000 |
+
 ### OData クエリ関数
+
+| Function   | 例                                |
+| ---------- | --------------------------------- |
+| contains   | $filter=contains(name,'(sample)') |
+| endswith   | $filter=endswith(name,'Inc.')     |
+| startswith | $filter=startswith(name,'a')      |
+
+#### 文字列値でフィルタリングするときの留意事項 [^](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#filter-using-string-values)
+
+- 大文字小文字を区別しない
+- フィルター条件では、特殊文字をURLエンコードする
+- ワイルドカード文字を使用することもできる
+- 一重引用符はエスケープするか、値を二重引用符で囲む
 
 ### Dataverse クエリ関数
 
+- [Dataverse クエリ関数](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#dataverse-query-functions)
+  - [完全なリスト](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/reference/queryfunctions)
+
 ### ラムダ式
+
+- [関連するコレクションの値でフィルターする](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#filter-using-values-of-related-collections)
+
 
 ---
 
