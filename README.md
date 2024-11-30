@@ -230,11 +230,117 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 #### 文字列値でフィルタリングするときの留意事項 [^](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#filter-using-string-values)
 
 - 大文字小文字を区別しない
+
 - フィルター条件では、特殊文字をURLエンコードする
+
+```
+contains(name,'+123') → contains(name,'%2B123')
+```
+
+| 特殊文字 | URLエンコード |
+| -------- | ------------- |
+| `$`      | `%24`         |
+| `&`      | `%26`         |
+| `+`      | `%2B`         |
+| `,`      | `%2C`         |
+| `/`      | `%2F`         |
+| `:`      | `%3A`         |
+| `;`      | `%3B`         |
+| `=`      | `%3D`         |
+| `?`      | `%3F`         |
+| `@`      | `%40`         |
+
 - ワイルドカード文字を使用することもできる
+
+| Character | Description                                                                                             | T-SQL のドキュメントと例                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| %         | 0 文字以上の任意の文字列に一致します。 このワイルドカード文字は、接頭辞または接尾辞として使用できます。 | https://learn.microsoft.com/ja-jp/sql/t-sql/language-elements/percent-character-wildcard-character-s-to-match-transact-sql |
+| _         | アンダースコア文字を使用して、パターン マッチングを含む文字列比較操作で任意の 1 文字を照合します。      | https://learn.microsoft.com/ja-jp/sql/t-sql/language-elements/wildcard-match-one-character-transact-sql                    |
+| []        | かっこで囲まれた指定範囲またはセット内の任意の 1 文字に一致します。                                     | https://learn.microsoft.com/ja-jp/sql/t-sql/language-elements/wildcard-character-s-to-match-transact-sql                   |
+| [^]       | 角かっこで囲まれた指定範囲またはセット内にはない任意の 1 文字に一致します。                             | https://learn.microsoft.com/ja-jp/sql/t-sql/language-elements/wildcard-character-s-not-to-match-transact-sql               |
+
 - 一重引用符はエスケープするか、値を二重引用符で囲む
 
+```
+// 文字列値の配列
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$filter=Microsoft.Dynamics.CRM.In(PropertyName=@p1,PropertyValues=@p2)&@p1='lastname'&@p2=["OBrian","OBryan","O'Brian","O'Bryan"]
+
+// 単一値
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$filter=lastname eq 'O''Bryan'
+```
+
 ### Dataverse クエリ関数
+
+| Group      | 関数                             | Description |
+| ---------- | -------------------------------- | ----------- |
+| 日付       | InFiscalPeriod                   |             |
+|            | InFiscalPeriodAndYear            |             |
+|            | InFiscalYear                     |             |
+|            | InOrAfterFiscalPeriodAndYear     |             |
+|            | InOrBeforeFiscalPeriodAndYear    |             |
+|            | Last7Days                        |             |
+|            | LastFiscalPeriod                 |             |
+|            | LastFiscalYear                   |             |
+|            | LastMonth                        |             |
+|            | LastWeek                         |             |
+|            | LastXDays                        |             |
+|            | LastXFiscalPeriods               |             |
+|            | LastXFiscalYears                 |             |
+|            | LastXHours                       |             |
+|            | LastXMonths                      |             |
+|            | LastXWeeks                       |             |
+|            | LastXYears                       |             |
+|            | LastYear                         |             |
+|            | Next7Days                        |             |
+|            | NextFiscalPeriod                 |             |
+|            | NextFiscalYear                   |             |
+|            | NextMonth                        |             |
+|            | NextWeek                         |             |
+|            | NextXDays                        |             |
+|            | NextXFiscalPeriods               |             |
+|            | NextXFiscalYears                 |             |
+|            | NextXHours                       |             |
+|            | NextXMonths                      |             |
+|            | NextXWeeks                       |             |
+|            | NextXYears                       |             |
+|            | NextYear                         |             |
+|            | OlderThanXDays                   |             |
+|            | OlderThanXHours                  |             |
+|            | OlderThanXMinutes                |             |
+|            | OlderThanXMonths                 |             |
+|            | OlderThanXWeeks                  |             |
+|            | OlderThanXYears                  |             |
+|            | On                               |             |
+|            | OnOrAfter                        |             |
+|            | OnOrBefore                       |             |
+|            | ThisFiscalPeriod                 |             |
+|            | ThisFiscalYear                   |             |
+|            | ThisMonth                        |             |
+|            | ThisWeek                         |             |
+|            | ThisYear                         |             |
+|            | Today                            |             |
+|            | Tomorrow                         |             |
+|            | Yesterday                        |             |
+| ID 値      | EqualBusinessId                  |             |
+|            | EqualUserId                      |             |
+|            | NotEqualBusinessId               |             |
+|            | NotEqualUserId                   |             |
+| 階層       | Above                            |             |
+|            | AboveOrEqual                     |             |
+|            | EqualUserOrUserHierarchy         |             |
+|            | EqualUserOrUserHierarchyAndTeams |             |
+|            | EqualUserOrUserTeams             |             |
+|            | EqualUserTeams                   |             |
+|            | NotUnder                         |             |
+|            | Under                            |             |
+|            | UnderOrEqual                     |             |
+| 選択肢の列 | ContainValues                    |             |
+|            | DoesNotContainValues             |             |
+| 次の範囲内 | Between                          |             |
+|            | NotBetween                       |             |
+| 後         | In                               |             |
+|            | NotIn                            |             |
+| 言語       | EqualUserLanguage                |             |
 
 - [Dataverse クエリ関数](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#dataverse-query-functions)
   - [完全なリスト](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/reference/queryfunctions)
