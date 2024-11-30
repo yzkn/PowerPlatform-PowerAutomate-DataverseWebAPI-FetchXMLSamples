@@ -1,4 +1,4 @@
--- SQL 4 CDSでの自動生成結果（集計に関する属性が消えている）
+-- FetchXML Builderでの自動生成結果（集計に関する属性が消えている）
 
 -- SELECT ya_column14, ya_column14, ya_column14, ya_column14, ya_column14, ya_column14, ya_column14
 -- FROM ya_member

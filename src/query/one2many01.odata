@@ -1,1 +1,1 @@
-https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$select=ya_column01,ya_e&$expand=ya_Member_Parent_ya_Member($select=ya_column01)&$filter=(ya_Member_Parent_ya_Member/any(o1:(o1/ya_memberid ne null)))
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$select=name&$expand=primarycontactid($select=fullname)&$filter=(primarycontactid/contactid ne null)

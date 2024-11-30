@@ -1,10 +1,9 @@
 <fetch>
-    <entity name="ya_member">
-        <attribute name="ya_column01" />
-        <attribute name="ya_e" />
-        <link-entity name="ya_member" from="ya_parent" to="ya_memberid" link-type="inner"
-            alias="UserName">
-            <attribute name="ya_column01" />
+    <entity name="account">
+        <attribute name="name" />
+        <link-entity name="contact" from="contactid" to="primarycontactid" link-type="inner"
+            alias="contact">
+            <attribute name="fullname" />
         </link-entity>
     </entity>
 </fetch>
