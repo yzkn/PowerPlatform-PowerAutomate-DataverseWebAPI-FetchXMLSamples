@@ -62,26 +62,12 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 
 ### 多対一
 
-```xml
-<fetch>
-  <entity name="ya_member">
-    <attribute name="ya_column01" />
-    <link-entity name="systemuser" from="systemuserid" to="createdby" link-type="inner" alias="Creator">
-      <attribute name='fullname' />
-    </link-entity>
-  </entity>
-</fetch>
-```
-
-```
-https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_members?$select=ya_column01&$expand=createdby($select=fullname)&$filter=(createdby/systemuserid ne null)
-```
-
-```sql
-SELECT ya_column01, Creator.fullname
-FROM ya_member
-JOIN systemuser Creator ON Creator.systemuserid = ya_member.createdby
-```
+- [SQL](src/query/many2one01.sql)
+  - [結果](src/result/many2one01.sql.json)
+- [FetchXML](src/query/many2one01.xml)
+  - [結果](src/result/many2one01.xml.json)
+- [ODataクエリ](src/query/many2one01.odata)
+  - [結果](src/result/many2one01.odata.json)
 
 <br><br><br><br><br>
 
@@ -98,8 +84,7 @@ JOIN systemuser Creator ON Creator.systemuserid = ya_member.createdby
     - MoreRecords : ブール値 : false
     - ページングCookie : 文字列 : （空文字列）
     - ページ番号 : 整数 : 1
-  - スコープ : 以下をコピペ（クラシックデザイナー）
-    - <a href="src/action/scope_793c6d53-0597-4f42-8184-e601f264fb7c.json">スコープ</a>
+  - スコープ : [スコープ](src/action/scope_793c6d53-0597-4f42-8184-e601f264fb7c.json)をクラシックデザイナーにコピペ
 
 
 <br><br><br><br><br>

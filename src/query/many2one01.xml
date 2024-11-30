@@ -1,0 +1,11 @@
+<fetch>
+    <entity name='contact'>
+        <attribute name='fullname' />
+        <link-entity name='account'
+            from='primarycontactid'
+            to='contactid'
+            alias='account'>
+            <attribute name='name' />
+        </link-entity>
+    </entity>
+</fetch>

@@ -1,0 +1,145 @@
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#contacts(fullname,account_primary_contact(name))",
+    "value": [
+        {
+            "@odata.etag": "W/\"3608214\"",
+            "fullname": "早川 諭 (サンプル)",
+            "contactid": "40974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608658\"",
+                    "name": "フォース コーヒー (サンプル)",
+                    "_primarycontactid_value": "40974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "2c974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(40974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608222\"",
+            "fullname": "小原 すみ江 (サンプル)",
+            "contactid": "42974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608661\"",
+                    "name": "リビングウェア (サンプル)",
+                    "_primarycontactid_value": "42974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "2e974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(42974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608229\"",
+            "fullname": "清岡 裕美子 (サンプル)",
+            "contactid": "44974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608625\"",
+                    "name": "アドベンチャー ワークス (サンプル)",
+                    "_primarycontactid_value": "44974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "30974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(44974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608236\"",
+            "fullname": "佐々木 理恵 (サンプル)",
+            "contactid": "46974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608674\"",
+                    "name": "ファブリカム (サンプル)",
+                    "_primarycontactid_value": "46974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "32974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(46974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608243\"",
+            "fullname": "佐本 久明 (サンプル)",
+            "contactid": "48974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608660\"",
+                    "name": "ブルー ヤンダー航空 (サンプル)",
+                    "_primarycontactid_value": "48974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "34974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(48974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608250\"",
+            "fullname": "和辺 義隆 (サンプル)",
+            "contactid": "4a974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608667\"",
+                    "name": "シティ パワー アンド ライト (サンプル)",
+                    "_primarycontactid_value": "4a974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "36974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(4a974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608257\"",
+            "fullname": "山元 憲次 (サンプル)",
+            "contactid": "4c974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608672\"",
+                    "name": "コントソ製薬 (サンプル)",
+                    "_primarycontactid_value": "4c974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "38974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(4c974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608264\"",
+            "fullname": "加須 紀夫 (サンプル)",
+            "contactid": "4e974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608651\"",
+                    "name": "アルパイン スキー ハウス (サンプル)",
+                    "_primarycontactid_value": "4e974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "3a974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(4e974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608271\"",
+            "fullname": "越安 辰夫 (サンプル)",
+            "contactid": "50974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608652\"",
+                    "name": "エー データム コーポレーション (サンプル)",
+                    "_primarycontactid_value": "50974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "3c974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(50974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        },
+        {
+            "@odata.etag": "W/\"3608278\"",
+            "fullname": "友野 史郎 (サンプル)",
+            "contactid": "52974e2f-fcaa-ef11-b8e8-002248f17214",
+            "account_primary_contact": [
+                {
+                    "@odata.etag": "W/\"3608649\"",
+                    "name": "コーホー ワイナリー (サンプル)",
+                    "_primarycontactid_value": "52974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "accountid": "3e974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "account_primary_contact@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(52974e2f-fcaa-ef11-b8e8-002248f17214)/account_primary_contact?$select=name"
+        }
+    ]
+}

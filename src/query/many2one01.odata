@@ -1,0 +1,1 @@
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$expand=account_primary_contact($select=name)&$filter=(account_primary_contact/any(o1:(o1/accountid ne null)))
