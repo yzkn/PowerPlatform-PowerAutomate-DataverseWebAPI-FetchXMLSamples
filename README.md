@@ -100,7 +100,11 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 
 # 演算子
 
+<br><br><br><br>
+
 ## FetchXML
+
+<br><br><br>
 
 ### 条件演算子
 
@@ -190,7 +194,11 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 | under                               | Returns all child records below the referenced record in the hierarchy.                                                     | 階層で参照されているレコードの下にあるすべての子レコードを返します。                                                                    |               |               | ○                       |             |              |               |                              |     |
 | yesterday                           | The value equals yesterday's date.                                                                                          | 値は昨日の日付と同じです。                                                                                                              |               | ○             |                         |             |              |               |                              |     |
 
+<br><br><br><br>
+
 ## ODataクエリ
+
+<br><br><br>
 
 ### 比較演算子
 
@@ -205,6 +213,8 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 | lt       | より小さい  | $filter=revenue lt 100000 |
 | le       | 以下        | $filter=revenue le 100000 |
 
+<br><br><br>
+
 ### 論理演算子
 
 | Operator | Description | 例                                                         |
@@ -213,11 +223,15 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 | or       | 論理和      | $filter=contains(name,'(sample)') or contains(name,'test') |
 | not      | 論理否定    | $filter=not contains(name,'sample')                        |
 
+<br><br><br>
+
 ### グループ化演算子
 
 | Operator | Description | 例                                                                     |
 | -------- | ----------- | ---------------------------------------------------------------------- |
 | ()       | グループ化  | (contains(name,'sample') or contains(name,'test')) and revenue gt 5000 |
+
+<br><br><br>
 
 ### OData クエリ関数
 
@@ -226,6 +240,8 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 | contains   | $filter=contains(name,'(sample)') |
 | endswith   | $filter=endswith(name,'Inc.')     |
 | startswith | $filter=startswith(name,'a')      |
+
+<br><br>
 
 #### 文字列値でフィルタリングするときの留意事項 [^](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#filter-using-string-values)
 
@@ -268,6 +284,8 @@ https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$f
 // 単一値
 https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts?$select=fullname&$filter=lastname eq 'O''Bryan'
 ```
+
+<br><br><br>
 
 ### Dataverse クエリ関数
 
@@ -363,10 +381,28 @@ https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$select=name,number
 - [Dataverse クエリ関数](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#dataverse-query-functions)
   - [完全なリスト](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/reference/queryfunctions)
 
-### ラムダ式
+<br><br><br>
 
-- [関連するコレクションの値でフィルターする](https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/query/filter-rows#filter-using-values-of-related-collections)
+### 関連テーブルの値に基づくフィルター
 
+<br><br>
+
+#### ルックアッププロパティのフィルター
+
+以下の2通りのフィルターは同等
+
+```
+systemuserid: 2a877c4f-2666-ef11-a670-002248f09e6b
+
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/systemusers(2a877c4f-2666-ef11-a670-002248f09e6b)/user_accounts?$select=name
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$filter=_owninguser_value eq 2a877c4f-2666-ef11-a670-002248f09e6b&$select=name
+```
+
+<br><br>
+
+#### ルックアップ列を表す単一値ナビゲーションプロパティの値に基づくフィルター
+
+<br><br>
 
 ---
 
