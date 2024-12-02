@@ -4,6 +4,57 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
 
 ---
 
+- [PowerPlatform-PowerAutomate-DataverseWebAPI-FetchXMLSamples](#powerplatform-powerautomate-dataversewebapi-fetchxmlsamples)
+- [利用したツール](#利用したツール)
+- [テーブル名の種類](#テーブル名の種類)
+- [基本的なクエリ](#基本的なクエリ)
+  - [件数（行数）指定＋列（属性）指定＋列の別名（エイリアス）＋フィルタリング＋ソート](#件数行数指定列属性指定列の別名エイリアスフィルタリングソート)
+  - [重複除外](#重複除外)
+  - [集計](#集計)
+  - [結合](#結合)
+    - [一対多](#一対多)
+    - [多対一](#多対一)
+- [FetchXMLでページングCookieを利用して大量データを読み込む](#fetchxmlでページングcookieを利用して大量データを読み込む)
+- [レコード数のカウント](#レコード数のカウント)
+  - [RetrieveTotalRecordCount関数](#retrievetotalrecordcount関数)
+  - [ODataクエリでカウント](#odataクエリでカウント)
+    - [テーブルにあるレコードが5000件未満の場合](#テーブルにあるレコードが5000件未満の場合)
+    - [テーブルにあるレコードが5000件超の場合](#テーブルにあるレコードが5000件超の場合)
+  - [FetchXMLでカウント](#fetchxmlでカウント)
+- [行の関連付け](#行の関連付け)
+  - [ODataクエリで関連付け](#odataクエリで関連付け)
+    - [単一値ナビゲーションプロパティ](#単一値ナビゲーションプロパティ)
+      - [関連付け](#関連付け)
+        - [PATCH](#patch)
+        - [PUT](#put)
+      - [関連付け解除](#関連付け解除)
+        - [PATCH](#patch-1)
+        - [DELETE](#delete)
+    - [コレクション値ナビゲーションプロパティ](#コレクション値ナビゲーションプロパティ)
+      - [レコードをコレクションに追加](#レコードをコレクションに追加)
+        - [一対多](#一対多-1)
+        - [多対多](#多対多)
+      - [レコードをコレクションから削除](#レコードをコレクションから削除)
+- [演算子](#演算子)
+  - [FetchXMLの演算子](#fetchxmlの演算子)
+    - [条件演算子](#条件演算子)
+  - [ODataクエリの演算子](#odataクエリの演算子)
+    - [比較演算子](#比較演算子)
+    - [論理演算子](#論理演算子)
+    - [グループ化演算子](#グループ化演算子)
+    - [OData クエリ関数](#odata-クエリ関数)
+      - [文字列値でフィルタリングするときの留意事項 ^](#文字列値でフィルタリングするときの留意事項-)
+    - [Dataverse クエリ関数](#dataverse-クエリ関数)
+    - [関連テーブルの値に基づくフィルター](#関連テーブルの値に基づくフィルター)
+      - [ルックアッププロパティのフィルター](#ルックアッププロパティのフィルター)
+      - [ルックアップ列を表す単一値ナビゲーションプロパティの値に基づくフィルター](#ルックアップ列を表す単一値ナビゲーションプロパティの値に基づくフィルター)
+        - [単一値ナビゲーションプロパティの階層のさらに上位にある値に基づくフィルター](#単一値ナビゲーションプロパティの階層のさらに上位にある値に基づくフィルター)
+        - [ラムダ演算子](#ラムダ演算子)
+          - [any](#any)
+          - [all](#all)
+
+---
+
 <br><br><br><br><br>
 
 # 利用したツール
@@ -149,7 +200,7 @@ https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/RetrieveTotalRecordCount(Ent
 
 <br><br><br><br>
 
-## ODataクエリ
+## ODataクエリでカウント
 
 <br><br><br>
 
@@ -232,7 +283,7 @@ Prefer: odata.include-annotations="Microsoft.Dynamics.CRM.totalrecordcount,Micro
 
 <br><br><br><br>
 
-## FetchXML
+## FetchXMLでカウント
 
 [ページングCookie](#fetchxmlでページングcookieを利用して大量データを読み込む)を利用して、5000件超のレコードをカウントする。
 
@@ -240,11 +291,167 @@ Prefer: odata.include-annotations="Microsoft.Dynamics.CRM.totalrecordcount,Micro
 
 <br><br><br><br><br>
 
+# 行の関連付け
+
+<br><br><br><br>
+
+## ODataクエリで関連付け
+
+| タイプ | 説明                                        | 設定先                                                                                           |
+| ------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 一対多 | 1 つのレコードに多数のレコードを関連付ける  | account レコードの contact_customer_accountsコレクション値ナビゲーション プロパティ              |
+| 多対一 | 多数のレコードを 1 つのレコードに関連付ける | contact レコードの parentcustomerid_account 単一値ナビゲーション プロパティ                      |
+| 多対多 | 多数のレコードを多数のレコードに関連付ける  | systemuser / role レコードの systemuserroles_association コレクション値ナビゲーション プロパティ |
+
+<br><br><br>
+
+### 単一値ナビゲーションプロパティ
+
+<br><br>
+
+#### 関連付け
+
+<br>
+
+##### PATCH
+
+```
+PATCH https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f) HTTP/1.1
+If-Match: *
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+
+{
+  "parentcustomerid_account@odata.bind": "accounts(ce9eaaef-f718-ed11-b83e-00224837179f)"
+}
+```
+
+<br>
+
+##### PUT
+
+```
+PUT https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f)/parentcustomerid_account/$ref HTTP/1.1
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+
+{
+  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)"
+}
+```
+
+<br><br>
+
+#### 関連付け解除
+
+<br>
+
+##### PATCH
+
+```
+PATCH https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f) HTTP/1.1
+If-Match: *
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+
+{
+  "parentcustomerid_account@odata.bind": null
+}
+```
+
+以下のように、@odata.bind注釈を含めなくても良い。
+
+```
+{
+  "parentcustomerid_account": null
+}
+```
+
+<br>
+
+##### DELETE
+
+```
+DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f)/parentcustomerid_account/$ref HTTP/1.1
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+```
+
+<br><br><br>
+
+### コレクション値ナビゲーションプロパティ
+
+<br><br>
+
+#### レコードをコレクションに追加
+
+<br>
+
+##### 一対多
+
+```
+POST https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)/contact_customer_accounts/$ref HTTP/1.1
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+
+{
+  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f)"
+}
+```
+
+<br>
+
+##### 多対多
+
+```
+POST https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/systemusers(34dcbaf5-f718-ed11-b83e-00224837179f)/systemuserroles_association/$ref HTTP/1.1
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+
+{
+  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/roles(886b280c-6396-4d56-a0a3-2c1b0a50ceb0)"
+}
+```
+
+<br><br>
+
+#### レコードをコレクションから削除
+
+```
+DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)/contact_customer_accounts(cf9eaaef-f718-ed11-b83e-00224837179f)/$ref HTTP/1.1
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+```
+
+```
+DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)/contact_customer_accounts/$ref?$id=https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f) HTTP/1.1
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+If-None-Match: null
+Accept: application/json
+```
+
+<br><br><br><br><br>
+
 # 演算子
 
 <br><br><br><br>
 
-## FetchXML
+## FetchXMLの演算子
 
 <br><br><br>
 
@@ -338,7 +545,7 @@ Prefer: odata.include-annotations="Microsoft.Dynamics.CRM.totalrecordcount,Micro
 
 <br><br><br><br>
 
-## ODataクエリ
+## ODataクエリの演算子
 
 <br><br><br>
 
