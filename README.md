@@ -17,7 +17,23 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
 
 # テーブル名の種類
 
-...
+取引先企業テーブル（Accountテーブル）を例に示す。
+
+| 名前                   | Name                  | 例                  | 説明                                                     |
+| ---------------------- | --------------------- | ------------------- | -------------------------------------------------------- |
+| スキーマ名             | SchemaName            | Account             | パスカルケースで定義した名前                             |
+| コレクションスキーマ名 | CollectionSchemaName  | Accounts            | スキーマ名の複数形                                       |
+| 論理名                 | LogicalName           | account             | スキーマ名をすべて小文字にした名前                       |
+| 論理コレクション名     | LogicalCollectionName | accounts            | コレクションスキーマ名をすべて小文字にした名前           |
+| エンティティセット名   | EntitySetName         | accounts            | Web APIでコレクションを識別するために使用される名前      |
+|                        |                       |                     | 既定では論理コレクション名と同じだが、変更することも可能 |
+| 表示名                 | DisplayName           | 取引先企業 Account  | スキーマ名と同じだが、スペースを含めることができる       |
+| 表示コレクション名     | DisplayCollectionName | 取引先企業 Accounts | 表示名の複数形                                           |
+
+- https://learn.microsoft.com/ja-jp/dynamics365/customerengagement/on-premises/developer/introduction-entities#names-used-in-entity-metadata
+- https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/customize-entity-metadata#editable-table-properties
+- https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/entity-metadata#table-names
+- https://learn.microsoft.com/ja-jp/power-apps/developer/data-platform/webapi/web-api-service-documents?tabs=insomnia#entity-set-name
 
 <br><br><br><br><br>
 
