@@ -15,6 +15,12 @@ Power Automate クラウドフローで FetchXML を使用して Dataverse テ�
 
 <br><br><br><br><br>
 
+# テーブル名の種類
+
+...
+
+<br><br><br><br><br>
+
 # 基本的なクエリ
 
 <br><br><br><br>
@@ -80,7 +86,7 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 
 <br><br><br><br><br>
 
-# ページングCookieを利用して大量データを読み込む
+# FetchXMLでページングCookieを利用して大量データを読み込む
 
 - トリガー
   - 手動でフローをトリガーします
@@ -95,6 +101,126 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
     - ページ番号 : 整数 : 1
   - スコープ : [スコープ](src/action/scope_793c6d53-0597-4f42-8184-e601f264fb7c.json)をクラシックデザイナーにコピペ
 
+<br><br><br><br><br>
+
+# レコード数のカウント
+
+## RetrieveTotalRecordCount関数
+
+5000件を超えるテーブルの合計行数の、過去24時間以内のスナップショットを取得する場合。
+
+※実稼働環境かサンドボックス環境でないとカウントされていないらしい
+
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/RetrieveTotalRecordCount(EntityNames=['account'])
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#Microsoft.Dynamics.CRM.RetrieveTotalRecordCountResponse",
+    "EntityRecordCountCollection": {
+        "Count": 1,
+        "IsReadOnly": false,
+        "Keys": [
+            "account"
+        ],
+        "Values": [
+            10
+        ]
+    }
+}
+```
+
+<br><br><br><br>
+
+## ODataクエリ
+
+<br><br><br>
+
+### テーブルにあるレコードが5000件未満の場合
+
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$select=accountid&$count=true
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#accounts(accountid)",
+    "@odata.count": 10,
+    "value": [
+        {
+            "@odata.etag": "W/\"3608658\"",
+            "accountid": "2c974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        （中略）
+        {
+            "@odata.etag": "W/\"3608649\"",
+            "accountid": "3e974e2f-fcaa-ef11-b8e8-002248f17214"
+        }
+    ]
+}
+```
+
+コレクションの数を表す数値だけを取得する場合。
+
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts/$count
+```
+
+```
+10
+```
+
+<br><br><br>
+
+### テーブルにあるレコードが5000件超の場合
+
+```
+GET https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_customers?$select=ya_customerid&$count=true
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#ya_customers(ya_customerid)",
+    "@odata.count": 5000,
+    "value": [
+        {
+            "@odata.etag": "W/\"3578333\"",
+            "ya_customerid": "ec872f6c-bda0-ef11-8a69-000d3acf17ba"
+        },
+        （中略）
+        {
+            "@odata.etag": "W/\"3330103\"",
+            "ya_customerid": "c7c5cdc5-56a1-ef11-8a69-000d3acf17ba"
+        }
+    ],
+    "@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/ya_customers?$select=ya_customerid&$count=true&$skiptoken=%3Ccookie%20pagenumber=%222%22%20pagingcookie=%22%253ccookie%2520page%253d%25221%2522%253e%253cya_customerid%2520last%253d%2522%257bC7C5CDC5-56A1-EF11-8A69-000D3ACF17BA%257d%2522%2520first%253d%2522%257bEC872F6C-BDA0-EF11-8A69-000D3ACF17BA%257d%2522%2520%252f%253e%253c%252fcookie%253e%22%20istracking=%22False%22%20/%3E"
+}
+```
+
+カウント値が5000で、ちょうど5000なのか、5000より大きいかを知りたい場合は、Preferリクエストヘッダーを追加する。
+
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$select=accountid&$count=true
+Prefer: odata.include-annotations="Microsoft.Dynamics.CRM.totalrecordcount,Microsoft.Dynamics.CRM.totalrecordcountlimitexceeded"
+```
+
+```json
+{
+    "@odata.count": 5000,
+    "@Microsoft.Dynamics.CRM.totalrecordcount": 5000,
+    "@Microsoft.Dynamics.CRM.totalrecordcountlimitexceeded": true,
+    （中略）
+}
+```
+
+<br><br><br><br>
+
+## FetchXML
+
+[ページングCookie](#fetchxmlでページングcookieを利用して大量データを読み込む)を利用して、5000件超のレコードをカウントする。
+
+ページングCookieによるページングを利用せずに、page属性とcount属性によるページングを利用した場合には、レコード数の上限は50000件（5000件／ページ　×　10ページ）となる。
 
 <br><br><br><br><br>
 
@@ -398,11 +524,173 @@ https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/systemusers(2a877c4f-2666-ef
 https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$filter=_owninguser_value eq 2a877c4f-2666-ef11-a670-002248f09e6b&$select=name
 ```
 
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#accounts(name)",
+    "value": [
+        {
+            "@odata.etag": "W/\"3608658\"",
+            "name": "フォース コーヒー (サンプル)",
+            "accountid": "2c974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608661\"",
+            "name": "リビングウェア (サンプル)",
+            "accountid": "2e974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608625\"",
+            "name": "アドベンチャー ワークス (サンプル)",
+            "accountid": "30974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608674\"",
+            "name": "ファブリカム (サンプル)",
+            "accountid": "32974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608660\"",
+            "name": "ブルー ヤンダー航空 (サンプル)",
+            "accountid": "34974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608667\"",
+            "name": "シティ パワー アンド ライト (サンプル)",
+            "accountid": "36974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608672\"",
+            "name": "コントソ製薬 (サンプル)",
+            "accountid": "38974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608651\"",
+            "name": "アルパイン スキー ハウス (サンプル)",
+            "accountid": "3a974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608652\"",
+            "name": "エー データム コーポレーション (サンプル)",
+            "accountid": "3c974e2f-fcaa-ef11-b8e8-002248f17214"
+        },
+        {
+            "@odata.etag": "W/\"3608649\"",
+            "name": "コーホー ワイナリー (サンプル)",
+            "accountid": "3e974e2f-fcaa-ef11-b8e8-002248f17214"
+        }
+    ]
+}
+```
+
 <br><br>
 
 #### ルックアップ列を表す単一値ナビゲーションプロパティの値に基づくフィルター
 
-<br><br>
+```
+GET https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$filter=primarycontactid/fullname eq '早川 諭 (サンプル)'&$select=name,_primarycontactid_value
+Accept: application/json
+OData-MaxVersion: 4.0
+OData-Version: 4.0
+Prefer: odata.include-annotations="OData.Community.Display.V1.FormattedValue"
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#accounts(name,_primarycontactid_value)",
+    "value": [
+        {
+            "@odata.etag": "W/\"3608658\"",
+            "name": "フォース コーヒー (サンプル)",
+            "_primarycontactid_value@OData.Community.Display.V1.FormattedValue": "早川 諭 (サンプル)",
+            "_primarycontactid_value": "40974e2f-fcaa-ef11-b8e8-002248f17214",
+            "accountid": "2c974e2f-fcaa-ef11-b8e8-002248f17214"
+        }
+    ]
+}
+```
+
+<br>
+
+##### 単一値ナビゲーションプロパティの階層のさらに上位にある値に基づくフィルター
+
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$filter=primarycontactid/createdby/fullname eq 'Aw Admin'&$select=name,_primarycontactid_value&$expand=primarycontactid($select=fullname,_createdby_value;$expand=createdby($select=fullname))&$top=1
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#accounts(name,_primarycontactid_value,primarycontactid(fullname,_createdby_value,createdby(fullname)))",
+    "value": [
+        {
+            "@odata.etag": "W/\"3608658\"",
+            "name": "フォース コーヒー (サンプル)",
+            "_primarycontactid_value": "40974e2f-fcaa-ef11-b8e8-002248f17214",
+            "accountid": "2c974e2f-fcaa-ef11-b8e8-002248f17214",
+            "primarycontactid": {
+                "fullname": "早川 諭 (サンプル)",
+                "_createdby_value": "2a877c4f-2666-ef11-a670-002248f09e6b",
+                "contactid": "40974e2f-fcaa-ef11-b8e8-002248f17214",
+                "createdby": {
+                    "fullname": "Aw Admin",
+                    "systemuserid": "2a877c4f-2666-ef11-a670-002248f09e6b",
+                    "ownerid": "2a877c4f-2666-ef11-a670-002248f09e6b"
+                }
+            }
+        }
+    ]
+}
+```
+
+<br>
+
+##### ラムダ演算子
+
+###### any
+
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$select=name&$expand=contact_customer_accounts($select=fullname)&$filter=contact_customer_accounts/any(e:contains(e/fullname,%27%E6%97%A9%E5%B7%9D%27))
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#accounts(name,contact_customer_accounts(fullname))",
+    "value": [
+        {
+            "@odata.etag": "W/\"3608658\"",
+            "name": "フォース コーヒー (サンプル)",
+            "accountid": "2c974e2f-fcaa-ef11-b8e8-002248f17214",
+            "contact_customer_accounts": [
+                {
+                    "@odata.etag": "W/\"3608214\"",
+                    "fullname": "早川 諭 (サンプル)",
+                    "_parentcustomerid_value": "2c974e2f-fcaa-ef11-b8e8-002248f17214",
+                    "contactid": "40974e2f-fcaa-ef11-b8e8-002248f17214"
+                }
+            ],
+            "contact_customer_accounts@odata.nextLink": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(2c974e2f-fcaa-ef11-b8e8-002248f17214)/contact_customer_accounts?$select=fullname"
+        }
+    ]
+}
+```
+
+###### all
+
+```
+https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts?$select=name&$filter=Account_Tasks/all(t:t/statecode eq 1)
+```
+
+```json
+{
+    "@odata.context": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/$metadata#accounts(name)",
+    "value": [
+        {
+            "@odata.etag": "W/\"3608625\"",
+            "name": "アドベンチャー ワークス (サンプル)",
+            "accountid": "30974e2f-fcaa-ef11-b8e8-002248f17214"
+        }
+    ]
+}
+```
 
 ---
 
