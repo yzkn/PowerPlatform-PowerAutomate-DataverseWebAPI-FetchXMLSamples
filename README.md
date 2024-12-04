@@ -348,6 +348,8 @@ Accept: application/json
 }
 ```
 
+※ `@odata.id` の値には、絶対URLを使用する
+
 <br><br>
 
 #### 関連付け解除
