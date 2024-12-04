@@ -320,7 +320,7 @@ Prefer: odata.include-annotations="Microsoft.Dynamics.CRM.totalrecordcount,Micro
 ##### PATCH
 
 ```
-PATCH https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f) HTTP/1.1
+PATCH https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(40974e2f-fcaa-ef11-b8e8-002248f17214) HTTP/1.1
 If-Match: *
 OData-MaxVersion: 4.0
 OData-Version: 4.0
@@ -328,7 +328,7 @@ If-None-Match: null
 Accept: application/json
 
 {
-  "parentcustomerid_account@odata.bind": "accounts(ce9eaaef-f718-ed11-b83e-00224837179f)"
+  "parentcustomerid_account@odata.bind": "accounts(2c974e2f-fcaa-ef11-b8e8-002248f17214)"
 }
 ```
 
@@ -337,14 +337,14 @@ Accept: application/json
 ##### PUT
 
 ```
-PUT https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f)/parentcustomerid_account/$ref HTTP/1.1
+PUT https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(40974e2f-fcaa-ef11-b8e8-002248f17214)/parentcustomerid_account/$ref HTTP/1.1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
 Accept: application/json
 
 {
-  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)"
+  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(2c974e2f-fcaa-ef11-b8e8-002248f17214)"
 }
 ```
 
@@ -357,7 +357,7 @@ Accept: application/json
 ##### PATCH
 
 ```
-PATCH https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f) HTTP/1.1
+PATCH https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(40974e2f-fcaa-ef11-b8e8-002248f17214) HTTP/1.1
 If-Match: *
 OData-MaxVersion: 4.0
 OData-Version: 4.0
@@ -382,7 +382,7 @@ Accept: application/json
 ##### DELETE
 
 ```
-DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f)/parentcustomerid_account/$ref HTTP/1.1
+DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(40974e2f-fcaa-ef11-b8e8-002248f17214)/parentcustomerid_account/$ref HTTP/1.1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
@@ -402,14 +402,14 @@ Accept: application/json
 ##### 一対多
 
 ```
-POST https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)/contact_customer_accounts/$ref HTTP/1.1
+POST https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(2c974e2f-fcaa-ef11-b8e8-002248f17214)/contact_customer_accounts/$ref HTTP/1.1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
 Accept: application/json
 
 {
-  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f)"
+  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(40974e2f-fcaa-ef11-b8e8-002248f17214)"
 }
 ```
 
@@ -418,14 +418,14 @@ Accept: application/json
 ##### 多対多
 
 ```
-POST https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/systemusers(34dcbaf5-f718-ed11-b83e-00224837179f)/systemuserroles_association/$ref HTTP/1.1
+POST https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/systemusers(c0429b81-5380-ef11-ac20-000d3a40bd7b)/systemuserroles_association/$ref HTTP/1.1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
 Accept: application/json
 
 {
-  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/roles(886b280c-6396-4d56-a0a3-2c1b0a50ceb0)"
+  "@odata.id": "https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/roles(b9b08637-acf6-e711-a95a-000d3a11f5ee)"
 }
 ```
 
@@ -434,7 +434,7 @@ Accept: application/json
 #### レコードをコレクションから削除
 
 ```
-DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)/contact_customer_accounts(cf9eaaef-f718-ed11-b83e-00224837179f)/$ref HTTP/1.1
+DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(2c974e2f-fcaa-ef11-b8e8-002248f17214)/contact_customer_accounts(40974e2f-fcaa-ef11-b8e8-002248f17214)/$ref HTTP/1.1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
@@ -442,7 +442,7 @@ Accept: application/json
 ```
 
 ```
-DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(ce9eaaef-f718-ed11-b83e-00224837179f)/contact_customer_accounts/$ref?$id=https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(cf9eaaef-f718-ed11-b83e-00224837179f) HTTP/1.1
+DELETE https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/accounts(2c974e2f-fcaa-ef11-b8e8-002248f17214)/contact_customer_accounts/$ref?$id=https://orgfa5b0cd9.crm7.dynamics.com/api/data/v9.2/contacts(40974e2f-fcaa-ef11-b8e8-002248f17214) HTTP/1.1
 OData-MaxVersion: 4.0
 OData-Version: 4.0
 If-None-Match: null
