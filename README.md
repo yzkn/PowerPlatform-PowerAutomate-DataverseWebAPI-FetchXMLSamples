@@ -155,6 +155,8 @@ ColumnCountは、FetchXMLとODataクエリで挙動が異なる
 
 # FetchXMLでページングCookieを利用して大量データを読み込む
 
+- [CountAllRecordsWithPagingCookiesInHttpAction](https://github.com/yzkn/PowerPlatform-PowerAutomate-DataverseWebAPI-CountRecords/blob/main/Flows/CountAllRecordsWithPagingCookiesInHttpAction_20241121035408.zip)
+
 - トリガー
   - 手動でフローをトリガーします
   - パラメーター
@@ -286,6 +288,8 @@ Prefer: odata.include-annotations="Microsoft.Dynamics.CRM.totalrecordcount,Micro
 ## FetchXMLでカウント
 
 [ページングCookie](#fetchxmlでページングcookieを利用して大量データを読み込む)を利用して、5000件超のレコードをカウントする。
+
+- [CountAllRecordsWithPagingCookiesInHttpAction](https://github.com/yzkn/PowerPlatform-PowerAutomate-DataverseWebAPI-CountRecords/blob/main/Flows/CountAllRecordsWithPagingCookiesInHttpAction_20241121035408.zip)
 
 ページングCookieによるページングを利用せずに、page属性とcount属性によるページングを利用した場合には、レコード数の上限は50000件（5000件／ページ　×　10ページ）となる。
 
